@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { analytics } from '../utils/analytics.js';
+import { profile } from '../data/portfolio.js';
 
 export function ContactForm() {
   const [status, setStatus] = useState('idle'); // idle | submitting | success | error
@@ -51,11 +52,11 @@ export function ContactForm() {
   }
 
   return (
-    <div className="contact-form-wrapper" onSubmit={handleSubmit}>
+    <div className="contact-form-wrapper">
       {status === 'error' && (
         <div className="contact-error" role="alert">
           <AlertCircle size={18} />
-          Something went wrong. Email me directly at shingavineel@gmail.com
+          Something went wrong. Email me directly at {profile.email}
         </div>
       )}
 

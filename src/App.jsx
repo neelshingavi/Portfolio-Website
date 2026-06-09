@@ -194,7 +194,7 @@ function App() {
 
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Go to top">
-          <img src="/favicon.svg" alt="Logo" className="brand-logo" />
+          <img src="/favicon-96x96.png" alt="Logo" className="brand-logo" />
           <small>Product Engineer</small>
         </a>
         <nav className="nav-links" aria-label="Primary navigation">
