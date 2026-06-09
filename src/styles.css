@@ -722,19 +722,33 @@ h2 {
   background: var(--lime);
 }
 
+.timeline-title {
+  margin-bottom: 6px;
+  font-size: 1.4rem;
+  color: var(--paper);
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.02em;
+}
+
 .timeline-column,
 .education-column {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 14px;
 }
 
 .education-item {
-  padding: 24px;
+  padding: 30px;
 }
 
 .education-item strong {
   color: var(--lime);
   font-family: 'JetBrains Mono', monospace;
+}
+
+.timeline-block:last-child,
+.education-item:last-child {
+  flex-grow: 1;
 }
 
 .timeline-block,
