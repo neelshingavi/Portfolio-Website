@@ -403,6 +403,7 @@ h2 {
 .hero-portrait::after {
   inset: auto 18px 18px;
   height: 38%;
+  border: none;
   background: linear-gradient(180deg, transparent, rgba(11, 12, 9, 0.55));
 }
 
