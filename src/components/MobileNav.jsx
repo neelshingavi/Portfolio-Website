@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Menu } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
 
@@ -11,6 +12,11 @@ const navItems = [
 
 export function MobileNav({ activeSection }) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Close on route change / section click
   const handleNavClick = () => setOpen(false);
@@ -41,65 +47,72 @@ export function MobileNav({ activeSection }) {
         {open ? <X size={22} /> : <Menu size={22} />}
       </button>
 
-      {/* Overlay + Drawer */}
-      <AnimatePresence>
-        {open && (
-          <>
-            {/* Backdrop */}
-            <m.div
-              className="mobile-nav-backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setOpen(false)}
-            />
+      {/* Overlay + Drawer Portaled to Document Body */}
+      {mounted && createPortal(
+        <AnimatePresence>
+          {open && (
+            <>
+              {/* Backdrop */}
+              <m.div
+                key="backdrop"
+                className="mobile-nav-backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setOpen(false)}
+                style={{ zIndex: 9998 }}
+              />
 
-            {/* Drawer */}
-            <m.nav
-              id="mobile-nav-drawer"
-              className="mobile-nav-drawer"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-              aria-label="Mobile navigation"
-            >
-              <div className="mobile-nav-header">
-                <span>Menu</span>
-                <button onClick={() => setOpen(false)} aria-label="Close menu">
-                  <X size={22} />
-                </button>
-              </div>
+              {/* Drawer */}
+              <m.nav
+                key="drawer"
+                id="mobile-nav-drawer"
+                className="mobile-nav-drawer"
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+                aria-label="Mobile navigation"
+                style={{ zIndex: 9999, pointerEvents: 'auto' }}
+              >
+                <div className="mobile-nav-header">
+                  <span>Menu</span>
+                  <button onClick={() => setOpen(false)} aria-label="Close menu">
+                    <X size={22} />
+                  </button>
+                </div>
 
-              <ul className="mobile-nav-list">
-                {navItems.map((item, i) => (
-                  <m.li
-                    key={item.href}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.06 }}
-                  >
-                    <a
-                      href={item.href}
-                      className={activeSection === item.label.toLowerCase() ? 'active' : ''}
-                      onClick={handleNavClick}
+                <ul className="mobile-nav-list">
+                  {navItems.map((item, i) => (
+                    <m.li
+                      key={item.href}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.06 }}
                     >
-                      <span className="mobile-nav-index">0{i + 1}</span>
-                      {item.label}
-                    </a>
-                  </m.li>
-                ))}
-              </ul>
+                      <a
+                        href={item.href}
+                        className={activeSection === item.label.toLowerCase() ? 'active' : ''}
+                        onClick={handleNavClick}
+                      >
+                        <span className="mobile-nav-index">0{i + 1}</span>
+                        {item.label}
+                      </a>
+                    </m.li>
+                  ))}
+                </ul>
 
-              <div className="mobile-nav-footer">
-                <a href="/assets/neel-shingavi-resume.pdf" target="_blank" rel="noopener noreferrer">
-                  Download Resume →
-                </a>
-              </div>
-            </m.nav>
-          </>
-        )}
-      </AnimatePresence>
+                <div className="mobile-nav-footer">
+                  <a href="/assets/neel-shingavi-resume.pdf" target="_blank" rel="noopener noreferrer">
+                    Download Resume →
+                  </a>
+                </div>
+              </m.nav>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </>
   );
 }
