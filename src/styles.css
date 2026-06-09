@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600;700&display=swap');
 
 :root {
   --ink: #0b0c09;
@@ -86,7 +85,12 @@ a {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 0.72;
+  opacity: 0;
+  animation: fadeInScene 2s ease 0.5s forwards; /* delay 0.5s so it doesn't flash */
+}
+
+@keyframes fadeInScene {
+  to { opacity: 0.72; }
 }
 
 main,
@@ -1339,4 +1343,275 @@ footer a {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* --- PRODUCTION UPGRADE STYLES --- */
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 9999;
+  padding: 12px 24px;
+  background: var(--lime);
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 16px;
+}
+
+/* Focus styles */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+}
+.site-header :focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* iOS Fixes */
+.site-header {
+  padding-top: max(18px, env(safe-area-inset-top));
+}
+footer {
+  padding-bottom: max(46px, env(safe-area-inset-bottom));
+}
+html {
+  overscroll-behavior-x: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Touch targets */
+@media (hover: none) and (pointer: coarse) {
+  .background-scene {
+    display: none;
+  }
+  .nav-links a,
+  .header-action,
+  .primary-action,
+  .secondary-action,
+  .social-row a {
+    min-height: 48px;
+  }
+  .system-tile:hover,
+  .timeline-block:hover,
+  .education-item:hover,
+  .skill-group:hover,
+  .signal-node:hover,
+  .project-card:hover {
+    transform: none;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-width: 812px) and (orientation: landscape) {
+  .hero-section {
+    min-height: auto;
+    padding-top: 80px;
+  }
+  h1 {
+    font-size: 3rem;
+  }
+  .hero-portrait {
+    min-height: 340px;
+  }
+}
+
+/* Mobile Typography Fix */
+@media (max-width: 480px) {
+  h1 { font-size: 3.4rem; }
+  h2 { font-size: 2.4rem; }
+  .hero-summary { font-size: 0.95rem; }
+  .project-card h3 { font-size: 2rem; }
+  .project-index { font-size: 3.5rem; }
+  .hero-portrait { min-height: 400px; }
+  .contact-panel { padding: 24px 16px; }
+}
+
+/* Mobile Nav */
+.mobile-nav-trigger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line);
+  background: rgba(244, 240, 223, 0.06);
+  color: var(--paper);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.mobile-nav-trigger:hover {
+  border-color: var(--lime);
+}
+@media (max-width: 1040px) {
+  .mobile-nav-trigger { display: flex; }
+  .nav-links { display: none; }
+  .header-action { display: none; }
+}
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(11, 12, 9, 0.7);
+  backdrop-filter: blur(4px);
+}
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  width: min(320px, 85vw);
+  display: flex;
+  flex-direction: column;
+  background: rgba(15, 16, 12, 0.98);
+  border-left: 1px solid var(--line);
+  backdrop-filter: blur(24px);
+  padding: 0;
+}
+.mobile-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.mobile-nav-header button {
+  background: none;
+  border: none;
+  color: var(--paper);
+  padding: 4px;
+}
+.mobile-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.mobile-nav-list a {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 1px solid transparent;
+  color: var(--paper-2);
+  font-size: 1.4rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  text-transform: capitalize;
+}
+.mobile-nav-list a:hover,
+.mobile-nav-list a.active {
+  border-color: rgba(191, 242, 5, 0.25);
+  background: rgba(191, 242, 5, 0.06);
+  color: var(--lime);
+}
+.mobile-nav-index {
+  color: var(--lime);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+.mobile-nav-footer {
+  padding: 24px;
+  border-top: 1px solid var(--line);
+}
+.mobile-nav-footer a {
+  display: block;
+  padding: 14px 20px;
+  background: var(--lime);
+  color: var(--ink);
+  font-weight: 800;
+  text-align: center;
+}
+
+/* Contact Form CSS */
+.contact-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 32px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.form-group label {
+  color: var(--lime);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.form-group input,
+.form-group textarea {
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  background: rgba(244, 240, 223, 0.04);
+  color: var(--paper);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+  resize: vertical;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--lime);
+  background: rgba(191, 242, 5, 0.03);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--muted);
+}
+.contact-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px;
+  text-align: center;
+}
+.contact-success .success-icon {
+  color: var(--lime);
+}
+.contact-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 94, 58, 0.4);
+  background: rgba(255, 94, 58, 0.08);
+  color: var(--coral);
+  font-size: 0.9rem;
 }

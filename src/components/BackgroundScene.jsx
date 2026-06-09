@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import * as THREE from 'three';
+import { Scene, PerspectiveCamera, WebGLRenderer, PlaneGeometry, MeshBasicMaterial, Mesh, BufferGeometry, BufferAttribute, PointsMaterial, Points } from 'three';
 
 export function BackgroundScene() {
   const canvasRef = useRef(null);
@@ -8,23 +8,23 @@ export function BackgroundScene() {
     const canvas = canvasRef.current;
     if (!canvas) return undefined;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(0, 20, 92);
 
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, preserveDrawingBuffer: true });
+    const renderer = new WebGLRenderer({ canvas, alpha: true, antialias: true, preserveDrawingBuffer: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    const terrain = new THREE.PlaneGeometry(150, 92, 74, 46);
+    const terrain = new PlaneGeometry(150, 92, 74, 46);
     terrain.rotateX(-Math.PI / 3.1);
-    const terrainMaterial = new THREE.MeshBasicMaterial({
+    const terrainMaterial = new MeshBasicMaterial({
       color: 0xbff205,
       wireframe: true,
       transparent: true,
       opacity: 0.16,
     });
-    const terrainMesh = new THREE.Mesh(terrain, terrainMaterial);
+    const terrainMesh = new Mesh(terrain, terrainMaterial);
     terrainMesh.position.set(0, -16, -12);
     scene.add(terrainMesh);
 
@@ -36,15 +36,15 @@ export function BackgroundScene() {
       positions[i * 3 + 2] = (Math.random() - 0.5) * 72;
     }
 
-    const particleGeometry = new THREE.BufferGeometry();
-    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const particleMaterial = new THREE.PointsMaterial({
+    const particleGeometry = new BufferGeometry();
+    particleGeometry.setAttribute('position', new BufferAttribute(positions, 3));
+    const particleMaterial = new PointsMaterial({
       color: 0xff5e3a,
       size: 0.62,
       transparent: true,
       opacity: 0.72,
     });
-    const particles = new THREE.Points(particleGeometry, particleMaterial);
+    const particles = new Points(particleGeometry, particleMaterial);
     scene.add(particles);
 
     const original = terrain.attributes.position.array.slice();

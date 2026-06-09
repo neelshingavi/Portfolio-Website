@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
 
+/**
+ * Cycles through an array of strings with a typewriter animation effect.
+ * @param {string[]} words - Array of strings to cycle through
+ * @param {number} [hold=1500] - Milliseconds to hold each complete word before deleting
+ * @returns {string} The current partially-typed string
+ */
 export function useTypeCycle(words, hold = 1500) {
   const [index, setIndex] = useState(0);
   const [text, setText] = useState('');

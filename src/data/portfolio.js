@@ -1,13 +1,15 @@
+import { getEmail, getPhone } from '../utils/contact.js';
+
 export const profile = {
   name: 'Neel Shingavi',
   title: 'Backend engineer and product builder',
   location: 'Pune, India',
-  email: 'shingavineel@gmail.com',
-  phone: '+91 9284466546',
+  get email() { return getEmail(); },
+  get phone() { return getPhone(); },
   resume: '/assets/neel-shingavi-resume.pdf',
   photo: '/assets/neel-shingavi.png',
   links: {
-    linkedin: 'https://linkedin.com/in/neel-shingavi',
+    linkedin: 'https://www.linkedin.com/in/neel-shingavi/',
     github: 'https://github.com/neelshingavi',
   },
   summary:
