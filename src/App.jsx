@@ -15,6 +15,8 @@ import {
   Send,
   ServerCog,
   Trophy,
+  Linkedin,
+  Github,
 } from 'lucide-react';
 import { AnimatedCounter } from './components/AnimatedCounter.jsx';
 import { Reveal } from './components/Reveal.jsx';
@@ -279,11 +281,25 @@ function App() {
               </a>
               <a
                 className="secondary-action"
-                href="#contact"
-                onClick={() => analytics.ctaClicked('hero_start_conversation')}
+                href={profile.links.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => analytics.socialClicked('linkedin')}
+                aria-label="LinkedIn profile (opens in new tab)"
               >
-                <Send size={18} />
-                Start a conversation
+                <Linkedin size={18} />
+                LinkedIn
+              </a>
+              <a
+                className="secondary-action"
+                href={profile.links.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => analytics.socialClicked('github')}
+                aria-label="GitHub profile (opens in new tab)"
+              >
+                <Github size={18} />
+                GitHub
               </a>
             </m.div>
           </div>
@@ -383,6 +399,7 @@ function App() {
 
           <div className="timeline-layout">
             <div className="timeline-column">
+              <h3 className="timeline-title">Experience</h3>
               {experience.map((item) => (
                 <Reveal className="timeline-block" key={item.company}>
                   <span>{item.period}</span>
@@ -397,6 +414,7 @@ function App() {
               ))}
             </div>
             <div className="education-column">
+              <h3 className="timeline-title">Education</h3>
               {education.map((item, index) => (
                 <Reveal className="education-item" delay={index * 0.08} key={item.school}>
                   <span>{item.period}</span>
@@ -508,29 +526,6 @@ function App() {
             </div>
 
             <ContactForm />
-
-            <div className="social-row" style={{marginTop: '40px'}}>
-              <a
-                href={profile.links.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => analytics.socialClicked('linkedin')}
-                aria-label="LinkedIn profile (opens in new tab)"
-              >
-                <ExternalLink size={19} />
-                LinkedIn
-              </a>
-              <a
-                href={profile.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => analytics.socialClicked('github')}
-                aria-label="GitHub profile (opens in new tab)"
-              >
-                <ExternalLink size={19} />
-                GitHub
-              </a>
-            </div>
           </Reveal>
         </section>
       </main>
