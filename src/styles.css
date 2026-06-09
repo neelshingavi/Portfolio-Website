@@ -1617,3 +1617,17 @@ html {
   color: var(--coral);
   font-size: 0.9rem;
 }
+
+/* Fix for Android/Chrome WebGL & Framer Motion backdrop-filter tearing bug */
+@media (max-width: 768px) {
+  .project-card,
+  .skill-group,
+  .signal-node,
+  .contact-panel {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background:
+      linear-gradient(180deg, rgba(244, 240, 223, 0.05), rgba(244, 240, 223, 0.01)),
+      rgba(11, 12, 9, 0.98);
+  }
+}
