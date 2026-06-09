@@ -1465,6 +1465,10 @@ html {
   border-color: var(--lime);
 }
 @media (max-width: 1040px) {
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+  }
   .mobile-nav-trigger { display: flex; }
   .nav-links { display: none; }
   .header-action { display: none; }
