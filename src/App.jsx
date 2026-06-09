@@ -15,8 +15,6 @@ import {
   Send,
   ServerCog,
   Trophy,
-  Linkedin,
-  Github,
 } from 'lucide-react';
 import { AnimatedCounter } from './components/AnimatedCounter.jsx';
 import { Reveal } from './components/Reveal.jsx';
@@ -287,7 +285,7 @@ function App() {
                 onClick={() => analytics.socialClicked('linkedin')}
                 aria-label="LinkedIn profile (opens in new tab)"
               >
-                <Linkedin size={18} />
+                <ExternalLink size={18} />
                 LinkedIn
               </a>
               <a
@@ -298,7 +296,7 @@ function App() {
                 onClick={() => analytics.socialClicked('github')}
                 aria-label="GitHub profile (opens in new tab)"
               >
-                <Github size={18} />
+                <ExternalLink size={18} />
                 GitHub
               </a>
             </m.div>
